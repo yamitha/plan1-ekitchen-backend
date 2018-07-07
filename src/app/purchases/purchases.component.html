@@ -1,0 +1,100 @@
+<main class="page-content">
+  <app-navigation></app-navigation>
+  
+  <div class="inner-page-container">
+      <div class="page-inner">
+          <div class="page-body">
+              <div class="common-dash">
+                  <div class="dash-pad">
+                      <div class="tab-title">
+                          <h2>
+                              Add coupons to the Customer
+                          </h2>
+                      </div>
+
+                      <div class="h-form">
+                          <form id="purchasesForm" name="purchasesForm" (ngSubmit)="purchasesForm.form.valid && addpurchases(purchasesForm)" #purchasesForm="ngForm" novalidate>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="">Select the Coupon that is Purchased</label>
+                                          <ng-selectize [config]="config" [options]="couponsList" [(ngModel)]="selectize.title" name="title" #couponId="ngModel" (ngModelChange)="onValueChangeCoupon($event)" noOptionsPlaceholder="No Coupons Available" hasOptionsPlaceholder="Choose an option from the list"></ng-selectize>
+                                          <!-- <div class="set" *ngIf="newpurchase.couponId">Coupon is set to <span>{{newpurchase.CouponName}}</span></div> -->
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Select the Customer that purchased the Coupon</label>
+                                        <ng-selectize [config]="config" [options]="usersList" [(ngModel)]="selectize.fullName" name="fullName" #couponId="ngModel" (ngModelChange)="onValueChangeUser($event)" noOptionsPlaceholder="No Customer Available" hasOptionsPlaceholder="Choose an option from the list"></ng-selectize>
+                                        <!-- <div class="set" *ngIf="newpurchase.CouponId">Coupon is set to <span>{{newpurchase.CouponName}}</span></div> -->
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Table Number</label>
+                                        <input type="text" class="form-control" placeholder="Table Number for the coupon" name="tablenumber" [(ngModel)]="newPurchases.tablenumber" #tablenumber="ngModel">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="form-group button-container">
+                                        <button type="submit" class="btn btn-success">Add purchase to user</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" *ngIf="errorMessage">
+                                    <div class="alert alert-danger">
+                                        {{ errorMessage }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="common-body">
+                <div class="common-search-wrapper">
+                    <div class="search-input">
+                        <input type="text" name="" value="" placeholder="Search" onclick="this.placeholder = ''" onblur="this.placeholder = 'Search'" class="form-control" [(ngModel)]="searchTerm">
+                        <span class="icon-search"></span>
+                    </div>
+                </div>
+                <div class="common-content-body">
+                    <div class="padding">
+                        <table class="common-table">
+                            <tr class="table-header">
+                                <th class="" width="120">Coupon</th>
+                                <th class="" width="120">Coupon URL</th>
+                                <th class="" width="120">Customer Name</th>
+                                <th class="" width="120">Customer Email</th>
+                                <th class="" width="50">Coupon Value</th>
+                                <th class="" width="200">Table Number</th>
+                                <th class="" width="80">Added On</th>
+                                <th class="" width="100">Added By</th>
+                                <th class="tp"></th>
+                                <th class="tp"></th>
+                            </tr>
+                            <tr class="common-table-tr" *ngFor="let purchase of purchasesList | filterPurchase : searchTerm">
+                                <td class="normal-td">{{ purchase.title }}</td>
+                                <td class="normal-td">{{ purchase.url }}</td>
+                                <td class="normal-td">{{ purchase.fullName }}</td>
+                                <td class="normal-td">{{ purchase.email }}</td>
+                                <td class="normal-td">{{ purchases.value }}</td>
+                                <td class="normal-td">{{ purchase.tablenumber }}</td>
+                                <td class="normal-td">{{ purchase.addedOn | date : 'short' }}</td>
+                                <td class="normal-td">{{ purchase.addedBy }}</td>
+                                <td class="button-td">
+                                    <button class="button-purchase" (click)="deletePurchase(purchase)">
+                                        x
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<ng2-toasty></ng2-toasty>
